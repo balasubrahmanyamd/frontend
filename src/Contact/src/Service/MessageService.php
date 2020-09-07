@@ -102,8 +102,8 @@ class MessageService implements MessageServiceInterface
             $this->config['dot_mail']['default']['message_options']['from'],
             $this->config['dot_mail']['default']['message_options']['from_name']
         );
-        $this->mailService->getMessage()->addTo($this->config['contact']['message_receivers']['to'], 'DotKernel Team');
-        $this->mailService->getMessage()->addCC($this->config['contact']['message_receivers']['cc'], 'DotKernel Team');
+        $this->mailService->getMessage()->addTo($this->config['contact']['message_receivers']['to']);
+        $this->mailService->getMessage()->addCC($this->config['contact']['message_receivers']['cc']);
         $this->mailService->getMessage()->setReplyTo($message->getEmail(), $message->getName());
 
         return $this->mailService->send()->isValid();

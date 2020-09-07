@@ -46,8 +46,6 @@ return [
         ]
     ],
     'contact' => [
-        'notification_receivers' => [
-        ],
         'message_receivers' => [
             'to' => [
                 'tech@example.com'
