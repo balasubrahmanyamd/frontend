@@ -39,7 +39,7 @@ class DefaultSchema extends AbstractMigration
             ->addColumn('uuid', 'binary', ['null' => false, 'limit' => 16])
             ->addColumn('identity', 'string', ['null' => false, 'limit' => 100])
             ->addColumn('password', 'string', ['null' => false, 'limit' => 100])
-            ->addColumn('status', 'z', [
+            ->addColumn('status', 'enum', [
                     'default' => User::STATUS_PENDING,
                     'values' => User::STATUSES
                 ])
