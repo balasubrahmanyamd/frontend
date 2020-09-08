@@ -39,7 +39,7 @@ class DefaultSchema extends AbstractMigration
             ->addColumn('uuid', 'binary', ['null' => false, 'limit' => 16])
             ->addColumn('identity', 'string', ['null' => false, 'limit' => 100])
             ->addColumn('password', 'string', ['null' => false, 'limit' => 100])
-            ->addColumn('status', 'enum', [
+            ->addColumn('status', 'z', [
                     'default' => User::STATUS_PENDING,
                     'values' => User::STATUSES
                 ])
@@ -112,6 +112,15 @@ class DefaultSchema extends AbstractMigration
             ->addTimestamps('created', 'updated')
             ->addIndex(['userUuid'], ['unique' => false])
             ->addIndex(['hash'], ['unique' => true])
+            ->addForeignKey('userUuid', 'user', 'uuid', $this->fkCascade)
+            ->create();
+
+        $this->table('user_token', ['id' => false, 'primary_key' => 'uuid', 'collation' => 'utf8mb4_general_ci'])
+            ->addColumn('uuid', 'binary', ['null' => false, 'limit' => 16])
+            ->addColumn('userUuid', 'binary', ['null' => false, 'limit' => 16])
+            ->addColumn('value', 'text', ['null' => false])
+            ->addColumn('expireAt', 'datetime', ['null' => false])
+            ->addTimestamps('created', 'updated')
             ->addForeignKey('userUuid', 'user', 'uuid', $this->fkCascade)
             ->create();
     }

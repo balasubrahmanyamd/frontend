@@ -81,6 +81,12 @@ class User extends AbstractEntity implements UserInterface
     protected $hash;
 
     /**
+     * One user has many tokens. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="UserToken", mappedBy="user")
+     */
+    protected $tokens;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Frontend\User\Entity\UserRole")
      * @ORM\JoinTable(
      *     name="user_roles",
@@ -107,6 +113,7 @@ class User extends AbstractEntity implements UserInterface
         parent::__construct();
         $this->roles = new ArrayCollection();
         $this->resetPasswords = new ArrayCollection();
+        $this->tokens = new ArrayCollection();
         $this->renewHash();
     }
 
@@ -251,6 +258,14 @@ class User extends AbstractEntity implements UserInterface
     public function getRoles()
     {
         return $this->roles;
+    }
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getTokens(): ?ArrayCollection
+    {
+        return $this->tokens;
     }
 
     /**

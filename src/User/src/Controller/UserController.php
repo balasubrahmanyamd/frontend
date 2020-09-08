@@ -7,13 +7,16 @@ use Dot\FlashMessenger\FlashMessenger;
 use Fig\Http\Message\RequestMethodInterface;
 use Frontend\Plugin\FormsPlugin;
 use Frontend\User\Entity\User;
+use Frontend\User\Entity\UserToken;
 use Frontend\User\Form\LoginForm;
 use Frontend\User\Form\RegisterForm;
 use Frontend\User\Service\UserService;
+use Frontend\User\Service\UserTokenService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Authentication\AuthenticationServiceInterface;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Session\SessionManager;
 use Mezzio\Router\RouterInterface;
 use Mezzio\Template\TemplateRendererInterface;
 use Dot\AnnotatedServices\Annotation\Inject;
@@ -31,6 +34,9 @@ class UserController extends AbstractActionController
     /** @var UserService $userService */
     protected UserService $userService;
 
+    /** @var UserTokenService $userTokenService */
+    protected UserTokenService $userTokenService;
+
     /** @var AuthenticationServiceInterface $authenticationService */
     protected AuthenticationServiceInterface $authenticationService;
 
@@ -40,37 +46,48 @@ class UserController extends AbstractActionController
     /** @var FormsPlugin $forms */
     protected FormsPlugin $forms;
 
+    /** @var SessionManager $session */
+    protected SessionManager $session;
+
     /**
      * UserController constructor.
      * @param UserService $userService
+     * @param UserTokenService $userTokenService
      * @param RouterInterface $router
      * @param TemplateRendererInterface $template
      * @param AuthenticationService $authenticationService
      * @param FlashMessenger $messenger
      * @param FormsPlugin $forms
+     * @param SessionManager $session
      * @Inject({
      *     UserService::class,
+     *     UserTokenService::class,
      *     RouterInterface::class,
      *     TemplateRendererInterface::class,
      *     AuthenticationService::class,
      *     FlashMessenger::class,
-     *     FormsPlugin::class
+     *     FormsPlugin::class,
+     *     SessionManager::class
      *     })
      */
     public function __construct(
         UserService $userService,
+        UserTokenService $userTokenService,
         RouterInterface $router,
         TemplateRendererInterface $template,
         AuthenticationService $authenticationService,
         FlashMessenger $messenger,
-        FormsPlugin $forms
+        FormsPlugin $forms,
+        SessionManager $session
     ) {
         $this->userService = $userService;
+        $this->userTokenService = $userTokenService;
         $this->router = $router;
         $this->template = $template;
         $this->authenticationService = $authenticationService;
         $this->messenger = $messenger;
         $this->forms = $forms;
+        $this->session = $session;
     }
 
     public function loginAction(): ResponseInterface
@@ -97,6 +114,12 @@ class UserController extends AbstractActionController
                 if ($authResult->isValid()) {
                     $identity = $authResult->getIdentity();
                     $this->authenticationService->getStorage()->write($identity);
+                    if (
+                        $form->getData()['_remember_me'] === UserTokenService::REMEMBER_ME &&
+                        $this->session->getConfig()->getUseCookies()
+                    ) {
+                        $this->userTokenService->createToken($identity);
+                    }
                     return new RedirectResponse($this->router->generateUri("page"));
                 } else {
                     $this->messenger->addData('shouldRebind', true);
@@ -122,6 +145,7 @@ class UserController extends AbstractActionController
     public function logoutAction(): ResponseInterface
     {
         $this->authenticationService->clearIdentity();
+        $this->userTokenService->destroyToken($this->getRequest()->getCookieParams());
         return new RedirectResponse(
             $this->router->generateUri('page')
         );

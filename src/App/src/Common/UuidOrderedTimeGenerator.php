@@ -20,9 +20,9 @@ final class UuidOrderedTimeGenerator
     private static $factory;
 
     /**
-     * @return UuidInterface
+     * @return UuidInterface|null
      */
-    public static function generateUuid(): UuidInterface
+    public static function generateUuid(): ?UuidInterface
     {
         try {
             return self::getFactory()->uuid1();

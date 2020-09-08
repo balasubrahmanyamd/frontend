@@ -6,6 +6,7 @@ use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ConfigAggregator\PhpFileProvider;
 
+
 // To enable or disable caching, set the `ConfigAggregator::ENABLE_CACHE` boolean in
 // `config/autoload/local.php`.
 $cacheConfig = [
@@ -40,6 +41,7 @@ $aggregator = new ConfigAggregator([
     \Dot\FlashMessenger\ConfigProvider::class,
     \Dot\Rbac\ConfigProvider::class,
     \Dot\Rbac\Guard\ConfigProvider::class,
+    \Dot\Session\ConfigProvider::class,
 
     // Default App module config
     \Frontend\App\ConfigProvider::class,

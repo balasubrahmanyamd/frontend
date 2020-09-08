@@ -76,7 +76,12 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - etc.
 
     $app->pipe(TranslatorMiddleware::class);
+
+    $app->pipe(\Dot\Session\SessionMiddleware::class);
+    $app->pipe(\Dot\Session\AutoLoginMiddleware::class);
+
     $app->pipe(AuthMiddleware::class);
+
     $app->pipe(ForbiddenHandler::class);
     $app->pipe(RbacGuardMiddleware::class);
 

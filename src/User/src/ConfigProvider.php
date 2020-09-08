@@ -10,6 +10,8 @@ use Frontend\User\Authentication\AuthenticationAdapter;
 use Frontend\User\Authentication\AuthenticationAdapterFactory;
 use Frontend\User\Authentication\AuthenticationServiceFactory;
 use Frontend\User\Authentication\AuthenticationServiceInterface;
+use Frontend\User\Authentication\PersistentAuthenticationAdapter;
+use Frontend\User\Authentication\PersistentAuthenticationAdapterFactory;
 use Frontend\User\Entity\User;
 use Frontend\User\Entity\UserInterface;
 use Frontend\User\Form\LoginForm;
@@ -19,6 +21,7 @@ use Frontend\User\Service\UserRoleService;
 use Frontend\User\Service\UserRoleServiceInterface;
 use Frontend\User\Service\UserService;
 use Frontend\User\Service\UserServiceInterface;
+use Frontend\User\Service\UserTokenService;
 use Laminas\Authentication\AuthenticationService;
 use Laminas\Form\ElementFactory;
 
@@ -52,8 +55,10 @@ class ConfigProvider
                 AccountController::class => AnnotatedServiceFactory::class,
                 UserService::class => AnnotatedServiceFactory::class,
                 UserRoleService::class => AnnotatedServiceFactory::class,
+                UserTokenService::class => AnnotatedServiceFactory::class,
                 AuthenticationService::class => AuthenticationServiceFactory::class,
                 AuthenticationAdapter::class => AuthenticationAdapterFactory::class,
+                PersistentAuthenticationAdapter::class => PersistentAuthenticationAdapterFactory::class,
             ],
             'aliases' => [
                 UserInterface::class => User::class,

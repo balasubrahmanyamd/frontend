@@ -79,7 +79,7 @@ class UserIdentity implements UserInterface
     }
 
     /**
-     * @return User
+     * @return string
      */
     public function getUuid(): string
     {

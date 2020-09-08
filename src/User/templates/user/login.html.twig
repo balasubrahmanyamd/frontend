@@ -28,6 +28,11 @@
                     {% set dummy = password.setAttribute('placeholder', elementTranslatePlaceholder) %}
                     {{ formElement(password) }}
 
+                    {% set rememberMe = form.get('_remember_me') %}
+                    {% set elementTranslatePlaceholder = rememberMe.getAttribute('label')|trans|raw %}
+                    {% set dummy = rememberMe.setAttribute('label', elementTranslatePlaceholder) %}
+                    {{ formElement(rememberMe) }}
+
                     {% set submit = form.get('submit') %}
                     {% set submitValue = submit.getValue|trans|raw %}
                     {% set dummy = submit.setAttribute('value', submitValue) %}

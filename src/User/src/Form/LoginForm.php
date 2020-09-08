@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Frontend\User\Form;
 
 use Frontend\User\InputFilter\LoginInputFilter;
+use Laminas\Form\Element\Checkbox;
 use Laminas\Form\Element\Email;
 use Laminas\Form\Element\Password;
 use Laminas\Form\Element\Submit;
@@ -59,6 +60,15 @@ class LoginForm extends Form
                 'placeholder' => 'Password',
             ],
             'type' => Password::class
+        ]);
+
+
+        $this->add([
+            'name' => '_remember_me',
+            'options' => [
+                'label' => 'Remember Me'
+            ],
+            'type' => Checkbox::class
         ]);
 
         $this->add([
