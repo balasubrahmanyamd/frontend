@@ -109,7 +109,7 @@ class UserTokenService
             1,
             $this->sessionManager->getConfig()->getCookiePath()
         );
-        $token = $this->userTokenRepository->findOneBy(['value' => $rememberMe]);
+        $token = $this->userTokenRepository->findOneBy(['value' => base64_decode($rememberMe)]);
         if (! ($token instanceof UserToken)) {
             return false;
         }
