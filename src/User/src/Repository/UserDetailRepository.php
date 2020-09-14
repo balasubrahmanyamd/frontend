@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Frontend\App\Repository\AbstractRepository;
 
 /**
  * Class UserDetailRepository
  * @package Frontend\User\Repository
  */
-class UserDetailRepository extends EntityRepository
+class UserDetailRepository extends AbstractRepository
 {
 }

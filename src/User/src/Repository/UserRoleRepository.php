@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
-use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\UserRole;
 
 /**
  * Class UserRoleRepository
  * @package Frontend\User\Repository
  */
-class UserRoleRepository extends EntityRepository
+class UserRoleRepository extends AbstractRepository
 {
     /**
      * @param string $name

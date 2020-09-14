@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Frontend\User\Repository;
 
-use Doctrine\ORM\EntityRepository;
+use Frontend\App\Repository\AbstractRepository;
 use Frontend\User\Entity\User;
 use Frontend\User\Entity\UserInterface;
 use Ramsey\Uuid\Doctrine\UuidBinaryOrderedTimeType;
@@ -17,7 +17,7 @@ use Exception;
  * Class UserRepository
  * @package Frontend\User\Repository
  */
-class UserRepository extends EntityRepository
+class UserRepository extends AbstractRepository
 {
 
     /**

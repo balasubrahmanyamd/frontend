@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Frontend\Contact\Repository;
 
+use Frontend\App\Repository\AbstractRepository;
 use Frontend\Contact\Entity\Message;
 use Doctrine\ORM;
-use Doctrine\ORM\EntityRepository;
 
 /**
  * Class MessageRepository
  * @package Frontend\Contact\Repository
  */
-class MessageRepository extends EntityRepository
+class MessageRepository extends AbstractRepository
 {
     /**
      * @param Message $message
