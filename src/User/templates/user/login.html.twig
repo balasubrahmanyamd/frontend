@@ -31,7 +31,7 @@
                     {% set rememberMe = form.get('_remember_me') %}
                     {% set elementTranslatePlaceholder = rememberMe.getAttribute('label')|trans|raw %}
                     {% set dummy = rememberMe.setAttribute('label', elementTranslatePlaceholder) %}
-                    {{ formElement(rememberMe) }}
+                    {{ formElement(rememberMe) }} <label>{{ rememberMe.getLabel() }}</label>
 
                     {% set submit = form.get('submit') %}
                     {% set submitValue = submit.getValue|trans|raw %}

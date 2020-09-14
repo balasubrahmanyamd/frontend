@@ -30,6 +30,16 @@
   p.forgot-password {
     padding-bottom: 15px;
   }
+
+  input[type="checkbox"] {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+  }
+
+  label {
+    vertical-align: super;
+  }
 }
 
 @media (max-width: 575px) {
